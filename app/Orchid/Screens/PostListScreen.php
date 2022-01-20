@@ -60,4 +60,11 @@ class PostListScreen extends Screen
             PostListLayout::class,
         ];
     }
+
+    public function export()
+    {
+        //export query key from here
+
+        $this->query->get('post');
+    }
 }

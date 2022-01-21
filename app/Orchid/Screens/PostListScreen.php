@@ -10,6 +10,7 @@ use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Layout;
 use Orchid\Screen\Screen;
 use Orchid\Screen\TD;
+use Symfony\Component\HttpFoundation\Request;
 
 class PostListScreen extends Screen
 {
@@ -19,7 +20,7 @@ class PostListScreen extends Screen
      * @var string
      */
     public $name = 'PostListScreen';
-
+    public $posts;
     /**
      * Query data.
      *
@@ -28,8 +29,10 @@ class PostListScreen extends Screen
     public function query(): array
     {
 
+        $this->posts = Post::with('categories')->latest()->filters()->paginate();
         return [
-            'post' => Post::with('categories')->latest()->filters()->paginate()
+            // want to export this key
+            'post' => $this->posts
         ];
     }
 
@@ -43,6 +46,7 @@ class PostListScreen extends Screen
         return [
             Button::make('Export All Applied Filter Result From Table')
                 ->method('export')
+                ->parameter(['posts' => $this->posts])
                 ->icon('cloud-download')
                 ->rawClick()
                 ->novalidate(),
@@ -61,8 +65,9 @@ class PostListScreen extends Screen
         ];
     }
 
-    public function export()
+    public function export($posts, Request $request)
     {
+        dd($posts);
         //export query key from here
 
         $this->query->get('post');

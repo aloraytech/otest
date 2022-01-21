@@ -7,6 +7,7 @@ use App\Orchid\Layouts\PostListLayout;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\Link;
+use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Layout;
 use Orchid\Screen\Screen;
 use Orchid\Screen\TD;
@@ -50,6 +51,8 @@ class PostListScreen extends Screen
                 ->icon('cloud-download')
                 ->rawClick()
                 ->novalidate(),
+            //need pagination number select here
+            // Select::make('pagination')->options([0 => 5])
         ];
     }
 
